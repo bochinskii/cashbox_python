@@ -51,8 +51,8 @@ while True:
     print('Введите номер ряда и количество мест в нем.')
     while True:
         try:
-            row = int(input('Введите номер ряда: '))
-            if row > 0:
+            ROW = int(input('Введите номер ряда: '))
+            if ROW > 0:
                 break
         except ValueError:
             print('Номер ряда представляет из себя целое положительное число')
@@ -60,8 +60,8 @@ while True:
             print('Номер ряда представляет из себя целое положительное число')
     while True:
         try:
-            seats = int(input('Введите количество мест для него: '))
-            if seats > 0:
+            SEATS = int(input('Введите количество мест для него: '))
+            if SEATS > 0:
                 break
         except ValueError:
             print('Номер места представляет из себя целое положительное число')
@@ -70,22 +70,22 @@ while True:
 
     # Проверка наличия такого ряда
     cursor.execute("SELECT id, row, seat FROM hall")
-    get_check_hall = cursor.fetchall()
-    for h_check in get_check_hall:
-        if h_check['row'] == row:
+    GET_CHECK_HALL = cursor.fetchall()
+    for H_CHECK in GET_CHECK_HALL:
+        if H_CHECK['row'] == ROW:
             print('Ряд с таким номером уже есть. Удалите данный зал и начните заново.')
             exit()
 
-    hall = []
-    for i in range(1, seats + 1):
-        hall.append((row, i))
+    HALL = []
+    for i in range(1, SEATS + 1):
+        HALL.append((ROW, i))
 
-    cursor.executemany("INSERT INTO hall (row, seat) VALUES (?, ?)", hall)
+    cursor.executemany("INSERT INTO hall (row, seat) VALUES (?, ?)", HALL)
     db.commit()
 
-    check = input('Хотите продолжить создавать ряды? \n\
+    CHECK = input('Хотите продолжить создавать ряды? \n\
 Нажмите клавишу "Enter", если "да" или введите "n" и нажмите "Enter", если хотите выйти: ')
-    if check == 'n':
+    if CHECK == 'n':
         # Выводим зал
         get_hall()
 
